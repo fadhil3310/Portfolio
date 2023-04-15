@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>Portfolio</title>
 
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    
     <script src="code.js"></script>
 </head>
 <body>
@@ -15,12 +19,15 @@
         <p id="header-contact-text">Kontak</p>
         <img src="img/garis.svg">
         <span class="material-symbols-outlined">mail</span>
-        <span class="material-symbols-outlined">call</span>
+        <img id="header-github" src="img/github-mark-white.svg">
     </header>
     <video id="background" autoplay muted loop src="background/pexels-oleg-gamulinskii-2421545-960x540-30fps.mp4"></video>
     <article>
-        <h1>Hai! 👋<br>Namaku? Virgiano Fadhil</h1>
-        <p id="introduction-text">Seorang manusia yang bisa ngoding</p>
+        <h1>
+            <span id="introduction-hi">Hai! <span id="introduction-emoji">👋</span></span>
+            <br>Namaku? Virgiano Fadhil
+        </h1>
+        <p id="introduction-text">Masih dibuat, belum jadi</p>
     </article>
     
     <nav>
@@ -34,5 +41,13 @@
             <p>Portfolio</p>
         </div>
     </nav>
+
+    <div id="portfolio">
+        <div id="portfolio-background"></div>
+        <div id="portfolio-content-container">
+            <h1>Portfolio</h1>
+            <p>Berikut daftar-daftar aplikasi yang pernah dibuat</p>
+        </div>
+    </div>
 </body>
 </html>

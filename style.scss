@@ -1,7 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Anuphan&family=Gruppo&family=Oxanium:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anuphan&family=Gruppo&family=Oxanium:wght@500;700&display=swap');
 
 body {
     background-color: black;
+}
+
+h1 {
+    font-family: 'Oxanium', cursive;
+}
+
+p {
+    font-family: 'Anuphan', sans-serif;
 }
 
 header {
@@ -10,20 +18,24 @@ header {
     top: 0;
     left: 0;
     width: 100%;
+    height: 40px;
     padding: 0 8px 0 8px;
     box-sizing: border-box;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     z-index: 999;
     
-    background-color: #00000094;
+    background-color: black;
     color: white;
     
     #header-contact-text {
         margin: 8px 2px 8px 8px;
-
         font-family: 'Gruppo', cursive;
         font-size: 24px;
+    }
+
+    #header-github {
+        width: 24px;
     }
 }
 
@@ -41,8 +53,13 @@ article {
 
     h1 {
         margin-bottom: 4px;
-        font-size: 50px;
-        font-family: 'Oxanium', cursive;
+        font-size: 45px;
+        font-weight: 500;
+
+        #introduction-hi {
+            font-size: 60px;
+            font-weight: 700;
+        }
     }
 
     #introduction-text {
@@ -56,8 +73,10 @@ nav {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 40px;
+    height: 50px;
     z-index: 4;
+
+    background: linear-gradient(to top, #00000073, transparent);
 
     .nav-item-container {
         display: flex;
@@ -65,28 +84,123 @@ nav {
         justify-content: center;
         align-items: center;
 
-        font-family: 'Gruppo', cursive;
-        font-weight: bold;
-        font-size: 18px;
-        //text-decoration: underline;
         cursor: pointer;
+
+        p {
+            position: relative;
+            font-family: 'Gruppo', cursive;
+            font-weight: bold;
+            font-size: 24px;
+            padding-bottom: 4px;
+        }
+
+        p::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            
+            z-index: -1;
+            background: linear-gradient(to right, red, green);
+        }
     }
     .nav-item-container:hover p {
         text-decoration: underline;
     }
 
     #nav-item-about {
-        background: #EDD57D;
-        color: black;
+        //background: #EDD57D;
+        color: white;
     }
 
     #nav-item-skill {
-        background: #35DF71;
-        color: black;
+        //background: #35DF71;
+        color: white;
     }
 
     #nav-item-portfolio {
-        background: red;
+        //background: red;
         color: white;
     }
 }
+
+#portfolio-transition {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    z-index: 3;
+
+    .portfolio-transition-cube {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 4px solid white;
+
+
+            font-size: 20px;
+
+    }
+}
+
+#portfolio {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    height: 100%;
+
+    z-index: 2;
+
+    color: white;
+
+    @keyframes show-page {
+        from {
+            transform: translateY(200px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes show-background {
+        from {
+            opacity: 0;
+            transform: scale(2);
+        }
+    }
+
+    #portfolio-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(background/portfolio.png);
+        background-size: cover;
+        z-index: -1;
+
+        animation: show-background 2s;
+    }
+
+    #portfolio-content-container {
+        padding: 20px;
+
+        animation: show-page 1s;
+
+        h1 {
+            
+            font-size: 50px;
+        }
+    
+        p {
+            
+        }
+    }
+
+    
+}
+
