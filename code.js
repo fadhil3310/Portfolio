@@ -13,7 +13,6 @@ let portfolioNavButton
 let isGlowVisible = true
 
 window.addEventListener('load', function() {
-    layoutBackground()
     setupUI()
 })
 
@@ -21,12 +20,12 @@ function setupUI() {
     background = document.querySelector('#background')
     article = document.querySelector('article')
 
-    aboutNavButton = document.querySelector("#nav-item-about")
+    aboutNavButton = document.querySelector("#nav-desktop-item-about")
 
-    skillNavButton = document.querySelector("#nav-item-skill")
+    skillNavButton = document.querySelector("#nav-desktop-item-skill")
 
     portfolioPage = document.querySelector("#portfolio")
-    portfolioNavButton = document.querySelector("#nav-item-portfolio")
+    portfolioNavButton = document.querySelector("#nav-desktop-item-portfolio")
 
     portfolioNavButton.addEventListener('click', function() {
         openPortfolioPage()
@@ -53,15 +52,18 @@ function setupBackgroundGlow() {
         gsap.to(glow, {opacity: 0})
         isGlowVisible = false
     })
-    //glow.addEventListener('mouseover', ev => ev.stopPropagation())
 }
 
 function openPortfolioPage() {
     //portfolioPage.style.display = 'block'
     //gsap.fromTo(portfolioPage, {clipPath: "polygon(0% 100%, 50% 100%, 50% 100%, 100% 100%)"}, {clipPath: "polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%)"})
+    
+    // Animate nav button
     gsap.to(aboutNavButton, {y: '-100vh', duration: 0.75, ease: 'expo.in'})
     gsap.to(skillNavButton, {y: '-100vh', duration: 0.5, ease: 'expo.in'})
     gsap.to(portfolioNavButton, {y: '-100vh', duration: 0.25, ease: 'expo.in'})
+    
+    // Hide glow effect
     gsap.to(glow, { opacity: 0, display: 'none' })
 
 
@@ -135,7 +137,6 @@ function openPortfolioPage() {
     
             counter++
             x -= cubeSize
-            
         }
 
         /*console.log(transitionDuration)
@@ -149,9 +150,5 @@ function openPortfolioPage() {
     
     gsap.to("#background", { y: -400, opacity: 0, duration: 1, ease: 'expo.in' })
     gsap.to("article", { y: -150, opacity: 0, duration: 1, ease: 'expo.in' })
-    
-}
-
-function layoutBackground() {
     
 }
