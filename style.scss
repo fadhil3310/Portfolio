@@ -137,6 +137,8 @@ nav {
 
     background: black;
 
+    transition: width 0.5s, margin 0.5s;
+
     .nav-desktop-item {
         display: flex;
         width: 100%;
@@ -363,7 +365,7 @@ article {
 @media screen and (max-width: 600px) and (min-height: 524px) {
 
 nav {
-    width: calc(100% - 6%);
+    width: 94%;
     margin: 16px 3%;
 
     background: #ffffff05;
