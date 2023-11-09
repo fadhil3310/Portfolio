@@ -6,6 +6,7 @@ let article
 let aboutPage
 let aboutNavButton
 
+let skillPage
 let skillNavButton
 
 let portfolioPage
@@ -24,18 +25,15 @@ function setupUI() {
     aboutPage = document.querySelector("#about")
     aboutNavButton = document.querySelector("#nav-desktop-item-about")
 
+    skillPage = document.querySelector("#skill")
     skillNavButton = document.querySelector("#nav-desktop-item-skill")
 
     portfolioPage = document.querySelector("#portfolio")
     portfolioNavButton = document.querySelector("#nav-desktop-item-portfolio")
 
-    aboutNavButton.addEventListener('click', _ => {
-        openAboutPage()
-    })
-
-    portfolioNavButton.addEventListener('click', _ => {
-        openPortfolioPage()
-    })
+    aboutNavButton.addEventListener('click', openAboutPage)
+    skillNavButton.addEventListener('click', openSkillPage)
+    portfolioNavButton.addEventListener('click', openPortfolioPage)
 
     setupBackgroundGlow()
 }
@@ -82,6 +80,30 @@ function openPortfolioPage() {
     gsap.to("article", { y: -150, opacity: 0, duration: 1, ease: 'expo.in' })
 }
 
+function openSkillPage() {
+    // Animate nav button
+    gsap.to(aboutNavButton, { y: '-100vh', duration: 0.5, ease: 'expo.in' })
+    gsap.to(skillNavButton, { y: '-100vh', duration: 0.25, ease: 'expo.in' })
+    gsap.to(portfolioNavButton, { y: '-100vh', duration: 0.5, ease: 'expo.in' })
+
+    // Hide glow effect
+    //gsap.to(glow, { opacity: 0, display: 'none' })
+    glow.style.width = '500px'
+    glow.style.height = '500px'
+
+    setTimeout(_ => {
+        playPageTransition('bottom', 'black', _ => {
+            skillPage.style.display = 'block'
+            background.style.display = 'none'
+            article.style.display = 'none'
+        })
+    }, 500)
+
+    // Animate background and article
+    gsap.to("#background", { y: -400, opacity: 0, duration: 1, ease: 'expo.in' })
+    gsap.to("article", { y: -150, opacity: 0, duration: 1, ease: 'expo.in' })
+}
+
 function openAboutPage() {
     // Animate nav button
     gsap.to(aboutNavButton, { y: '-100vh', duration: 0.25, ease: 'expo.in' })
@@ -110,16 +132,22 @@ function playPageTransition(from, color, onFinish) {
 
     document.body.appendChild(pageTransition)
 
-    const cubeSize = window.innerWidth > 600 ? 100 : window.innerWidth / 10
+    let cubeSize = 100
     let position
     let counter = 1
     let continueLooping = true
 
+    if (window.innerWidth < 600) {
+        cubeSize = window.innerWidth / 12
+        from = 'bottom'
+    }
+
     if (from == 'left') position = 0
     else if (from == 'right') position = window.innerWidth - cubeSize
+    else position = window.innerHeight - cubeSize
 
     while (continueLooping) {
-        let cubeAmount = counter
+        let cubeAmount = from != 'bottom' ? counter : Math.ceil(window.innerWidth / cubeSize)
         let howManyCubesCreated = 0
 
         for (let i = 1; i <= cubeAmount; i++) {
@@ -149,7 +177,13 @@ function playPageTransition(from, color, onFinish) {
                 isCubeXOutOfBound = cubeX < -cubeSize
                 isCubeYOutOfBound = cubeY < -cubeSize
             } else {
+                cubeX = (i - 1) * cubeSize
+                cubeY = position
 
+                isCubeXOutOfBound = cubeX > window.innerWidth + cubeSize
+                isCubeYOutOfBound = cubeY < -cubeSize
+
+                console.log(cubeX, cubeY, cubeSize, counter)
             }
 
             // If cubeX or cubeY is out of bound, skip
@@ -159,16 +193,19 @@ function playPageTransition(from, color, onFinish) {
             cube.style.left = cubeX + 'px'
             cube.style.top = cubeY + 'px'
 
-            // Store counter to a temporary variable to be checked later
+            // Store cube states to temporary variables to be checked later
             // if this cube is the last cube in the transition
             let counterTemp = counter
+            let positionTemp = position
             
             howManyCubesCreated++
 
             // Animate cube
             gsap.from(cube, { opacity: 0, duration: 0.1, delay: counter * 0.02, onComplete: _ => {
                 gsap.to(cube, { background: color, duration: 0.25, onComplete: _ => {
-                    const isLastCube = counterTemp > 1 && howManyCubesCreated == 1
+                    const isLastCube = from != 'bottom' ?
+                        counterTemp > 1 && howManyCubesCreated == 1: positionTemp < -cubeAmount && i == cubeAmount
+                    console.log(isLastCube, position, i, cubeAmount)
                     // If this is the last cube, call onFinish
                     if (isLastCube) onFinish()
                     gsap.to(cube, { opacity: 0, duration: 0.25, delay: 0.25, onComplete: _ => {
@@ -181,10 +218,17 @@ function playPageTransition(from, color, onFinish) {
             pageTransition.appendChild(cube)
         }
 
-        if (counter > 1 && howManyCubesCreated == 1) {
-            continueLooping = false
-            break
-        }
+        if (from != 'bottom') {
+            if (counter > 1 && howManyCubesCreated == 1) {
+                continueLooping = false
+                break
+            }
+        } else {
+            if (position < -cubeSize) {
+                continueLooping = false
+                break
+            }
+        }   
 
         counter++
         
